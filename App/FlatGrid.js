@@ -33,7 +33,7 @@ export default class FlatGrid extends React.PureComponent {
             activeRow: null,
         };
     }
-
+    
     setSelected = (activeRow, collapsed) => {    
         this.setState({
             activeRow: collapsed === false ? null : activeRow

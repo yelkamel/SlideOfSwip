@@ -4,7 +4,7 @@ import { Animated, Easing } from 'react-native';
 
 const ANIMATED_EASING_PREFIXES = ['easeInOut', 'easeOut', 'easeIn'];
 
-export default class Collapsible extends Component {
+export default class CollapsibleView extends Component {
   static propTypes = {
     align: PropTypes.oneOf(['top', 'center', 'bottom']),
     collapsed: PropTypes.bool,
@@ -34,6 +34,8 @@ export default class Collapsible extends Component {
     };
   }
 
+  contentHandle = null;
+  
   componentWillReceiveProps(nextProps) {
     if (nextProps.collapsed !== this.props.collapsed) {
       this._toggleCollapsed(nextProps.collapsed);
@@ -44,8 +46,6 @@ export default class Collapsible extends Component {
       this.state.height.setValue(nextProps.collapsedHeight);
     }
   }
-
-  contentHandle = null;
 
   _handleRef = ref => {
     this.contentHandle = ref;
@@ -83,6 +83,7 @@ export default class Collapsible extends Component {
   }
 
   _toggleCollapsed(collapsed) {
+    
     if (collapsed) {
       this._transitionToHeight(this.props.collapsedHeight);
     } else if (!this.contentHandle) {
@@ -100,6 +101,7 @@ export default class Collapsible extends Component {
   _transitionToHeight(height) {
     const { duration } = this.props;
     let easing = this.props.easing;
+    
     if (typeof easing === 'string') {
       let prefix;
       let found = false;
@@ -115,9 +117,11 @@ export default class Collapsible extends Component {
           break;
         }
       }
+      
       if (!found) {
         easing = Easing[easing];
       }
+      
       if (!easing) {
         throw new Error('Invalid easing type "' + this.props.easing + '"');
       }
@@ -126,6 +130,7 @@ export default class Collapsible extends Component {
     if (this._animation) {
       this._animation.stop();
     }
+
     this.setState({ animating: true });
     this._animation = Animated.timing(this.state.height, {
       toValue: height,
@@ -136,6 +141,7 @@ export default class Collapsible extends Component {
 
   _handleLayoutChange = event => {
     const contentHeight = event.nativeEvent.layout.height;
+    
     if (
       this.state.animating ||
       this.props.collapsed ||
@@ -144,6 +150,7 @@ export default class Collapsible extends Component {
     ) {
       return;
     }
+
     this.state.height.setValue(contentHeight);
     this.setState({ contentHeight });
   };
@@ -157,6 +164,7 @@ export default class Collapsible extends Component {
       height: height,
     };
     const contentStyle = {};
+
     if (measuring) {
       contentStyle.position = 'absolute';
       contentStyle.opacity = 0;
@@ -179,6 +187,7 @@ export default class Collapsible extends Component {
         },
       ];
     }
+
     return (
       <Animated.View style={style} pointerEvents={collapsed ? 'none' : 'auto'}>
         <Animated.View

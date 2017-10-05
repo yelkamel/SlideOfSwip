@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Text,TouchableWithoutFeedback, Image, View } from 'react-native';
-import Collapsible from './Collapsible'
+import CollapsibleView from './CollapsibleView'
 
 export default class CollapsibleRow extends React.PureComponent {
 
@@ -18,7 +18,7 @@ export default class CollapsibleRow extends React.PureComponent {
           </Text>
         </View>
         </TouchableWithoutFeedback>
-        <Collapsible
+        <CollapsibleView
           collapsed={this.props.collapsed}
           align="center"
           duration={100}
@@ -31,7 +31,7 @@ export default class CollapsibleRow extends React.PureComponent {
           {`${rowData.name.first} ${rowData.name.last}`}
           </Text>
         </View>
-        </Collapsible>
+        </CollapsibleView>
       </View>
     );
   }

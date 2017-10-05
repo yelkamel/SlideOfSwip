@@ -43,6 +43,7 @@ export default class LaunchScreen extends React.Component {
     this.makeRemoteRequest();
   }
 
+  // to get a random user from a free API name
   makeRemoteRequest = () => {
     const { page, seed } = this.state;
     const url = `https://randomuser.me/api/?seed=${seed}&page=${page}&results=${NB_ROW}`;
@@ -60,12 +61,14 @@ export default class LaunchScreen extends React.Component {
       });
   };
 
+  // To have a unique row collapsed
   setSelected = (activeRow, collapsed) => {
     this.setState({
       activeRow: collapsed === false ? null : activeRow
     })
   }
   
+  // Animation to get a biggest header when change tab
   _onChangeTab = () => {
     Animated.timing(                     
       this.state.scrollAnim,                    
